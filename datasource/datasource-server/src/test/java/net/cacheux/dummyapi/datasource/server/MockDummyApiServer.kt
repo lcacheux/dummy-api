@@ -121,6 +121,7 @@ class MockDummyApiServer(private val usedPort: Int = TEST_PORT) {
                 override fun dispatch(request: RecordedRequest): MockResponse {
                     return request.path?.run {
                         when {
+                            startsWith("/user/malformed") -> MockResponse().setBody(DETAILED_USER.dropLast(10))
                             startsWith("/user?") -> MockResponse().setBody(USER_LIST)
                             startsWith("/user/") -> MockResponse().setBody(DETAILED_USER)
                             else -> MockResponse().setResponseCode(404)

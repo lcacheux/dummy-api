@@ -6,6 +6,7 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import net.cacheux.dummyapi.datasource.server.MockDummyApiServer.Companion.TEST_PORT
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
 import java.net.ConnectException
@@ -36,11 +37,29 @@ class DatasourceRepositoryServerImplTest {
     }
 
     @Test(expected = ConnectException::class)
-    fun testServerUnavailable() {
+    fun testGetUserListServerUnavailable() {
         val datasourceRepository = DatasourceRepositoryServerImpl("http://localhost:${TEST_PORT+2}")
 
         runBlocking {
             datasourceRepository.getUserList().first()
+        }
+    }
+
+    @Test
+    fun testGetDetailedUserServerUnavailable() {
+        val datasourceRepository = DatasourceRepositoryServerImpl("http://localhost:${TEST_PORT+2}")
+
+        runBlocking {
+            assertNull(datasourceRepository.getDetailedUser("id1234").first())
+        }
+    }
+
+    @Test
+    fun testGetDetailedUserMalformedJson() {
+        val datasourceRepository = DatasourceRepositoryServerImpl("http://localhost:$TEST_PORT")
+
+        runBlocking {
+            assertNull(datasourceRepository.getDetailedUser("malformed").first())
         }
     }
 }

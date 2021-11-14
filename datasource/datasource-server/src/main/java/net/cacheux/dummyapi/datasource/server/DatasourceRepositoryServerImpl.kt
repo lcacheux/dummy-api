@@ -5,6 +5,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 import net.cacheux.dummyapi.common.DatasourceRepository
 import net.cacheux.dummyapi.common.model.DetailedUser
@@ -54,6 +55,8 @@ class DatasourceRepositoryServerImpl(
             val result = dummyApiUsers.getUserDetails(uid)
             emit (result.toDetailedUser())
         } catch (e: IOException) {
+            emit(null)
+        } catch (e: SerializationException) {
             emit(null)
         }
     }.flowOn(coroutineContext)
