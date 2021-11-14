@@ -18,20 +18,30 @@ import net.cacheux.dummyapi.common.model.User
 import net.cacheux.dummyapi.ui.theme.Purple200
 
 @Composable
-fun UserListItem(viewModel: MainViewModel, user: User, callback: (User) -> Unit) {
+fun UserListItem(viewModel: MainViewModel, user: User) {
     val selectedUser = viewModel.getSelectedUser().observeAsState()
+    val isSelected = selectedUser.value == user
     Card(
         modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp).fillMaxWidth(),
-        elevation = if (selectedUser.value == user) 4.dp else 2.dp,
-        backgroundColor = if (selectedUser.value == user) Purple200 else Color.White,
+        elevation = if (isSelected) 4.dp else 2.dp,
+        backgroundColor = if (isSelected) Purple200 else Color.White,
     ) {
         Row(
             Modifier.clickable {
-                callback(user)
+                if (isSelected) {
+                    viewModel.closeDetails()
+                } else {
+                    viewModel.loadUser(user)
+                }
             }
         ) {
             Image(
-                painter = rememberImagePainter(user.pictureUrl),
+                painter = rememberImagePainter(
+                    data = user.pictureUrl,
+                    builder = {
+                        crossfade(true)
+                    }
+                ),
                 contentDescription = "",
                 modifier = Modifier
                     .size(64.dp)

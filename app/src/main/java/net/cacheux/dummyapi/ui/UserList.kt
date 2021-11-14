@@ -20,12 +20,12 @@ import net.cacheux.dummyapi.R
 import net.cacheux.dummyapi.common.model.User
 
 @Composable
-fun LiveUserList(viewModel: MainViewModel, callback: (User) -> Unit) {
-    UserList(viewModel, callback)
+fun LiveUserList(viewModel: MainViewModel) {
+    UserList(viewModel)
 }
 
 @Composable
-fun UserList(viewModel: MainViewModel, callback: (User) -> Unit) {
+fun UserList(viewModel: MainViewModel) {
     Scaffold(
         content = {
             val lazyUserList: LazyPagingItems<User> = viewModel.users.collectAsLazyPagingItems()
@@ -33,7 +33,7 @@ fun UserList(viewModel: MainViewModel, callback: (User) -> Unit) {
                 contentPadding = PaddingValues(horizontal = 8.dp, vertical = 8.dp)
             ) {
                 items(lazyUserList) { user ->
-                    user?.let { UserListItem(viewModel, user, callback) }
+                    user?.let { UserListItem(viewModel, user) }
                 }
 
                 lazyUserList.apply {

@@ -1,7 +1,6 @@
 package net.cacheux.dummyapi
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -9,7 +8,6 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
@@ -60,7 +58,6 @@ fun DummyApiApp(viewModel: MainViewModel) {
             }
         )
     )
-
     BottomSheetScaffold(
         topBar = {
             TopAppBar(
@@ -121,11 +118,17 @@ fun DummyApiApp(viewModel: MainViewModel) {
         },
         sheetPeekHeight = 0.dp
     ) {
-        LiveUserList(viewModel, callback = { user ->
-            viewModel.loadUser(user)
-            coroutineScope.launch {
-                bottomSheetScaffoldState.bottomSheetState.expand()
-            }
-        })
+        LiveUserList(viewModel)
+
+        when(viewState.value) {
+            is ViewState.ShowUserList ->
+                coroutineScope.launch {
+                    bottomSheetScaffoldState.bottomSheetState.collapse()
+                }
+            else ->
+                coroutineScope.launch {
+                    bottomSheetScaffoldState.bottomSheetState.expand()
+                }
+        }
     }
 }
