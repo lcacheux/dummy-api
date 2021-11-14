@@ -1,0 +1,21 @@
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+rootProject.name = "Dummy API"
+include ':app'
+include ':common'
+include ':datasource-cached'
+include ':datasource-memory'
+include ':datasource-room'
+include ':datasource-server'
+include ':datasource-test'
+
+project(":datasource-cached").projectDir = new File("datasource/datasource-cached")
+project(":datasource-memory").projectDir = new File("datasource/datasource-memory")
+project(":datasource-room").projectDir = new File("datasource/datasource-room")
+project(":datasource-server").projectDir = new File("datasource/datasource-server")
+project(":datasource-test").projectDir = new File("datasource/datasource-test")

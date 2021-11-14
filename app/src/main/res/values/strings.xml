@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Dummy API</string>
+    <string name="error_loading_userlist">Error loading users list</string>
+    <string name="error_loading_detailed_user">Error loading user details</string>
+    <string name="retry">Retry</string>
+    <string name="clear_cache">Clear cache</string>
+    <string name="cache_cleared">Cache cleared</string>
+</resources>
