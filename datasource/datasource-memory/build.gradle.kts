@@ -10,7 +10,7 @@ java {
 
 dependencies {
     implementation(project(":common"))
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}")
     implementation("io.insert-koin:koin-core:${Versions.koin}")
     implementation("androidx.annotation:annotation:1.3.0")
 

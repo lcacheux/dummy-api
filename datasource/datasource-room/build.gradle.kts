@@ -51,15 +51,13 @@ dependencies {
     implementation(project(":common"))
 
     implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.appcompat:appcompat:1.3.1")
+    implementation("androidx.appcompat:appcompat:1.4.0")
 
     implementation("androidx.room:room-runtime:${Versions.room}")
     annotationProcessor("androidx.room:room-compiler:${Versions.room}")
 
-    // To use Kotlin annotation processing tool (kapt)
     kapt("androidx.room:room-compiler:${Versions.room}")
 
-    // optional - Kotlin Extensions and Coroutines support for Room
     implementation("androidx.room:room-ktx:${Versions.room}")
 
     implementation("io.insert-koin:koin-core:${Versions.koin}")

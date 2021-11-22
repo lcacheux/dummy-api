@@ -1,5 +1,6 @@
 object Versions {
     const val kotlin = "1.5.31"
+    const val coroutines = "1.5.2"
     const val compose = "1.0.5"
     const val retrofit = "2.6.0"
     const val koin = "3.1.3"

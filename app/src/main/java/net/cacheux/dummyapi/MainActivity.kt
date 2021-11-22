@@ -119,14 +119,14 @@ fun DummyApiApp(viewModel: MainViewModel) {
         sheetPeekHeight = 0.dp
     ) {
         LiveUserList(viewModel)
-
+        
         when(viewState.value) {
             is ViewState.ShowUserList ->
-                coroutineScope.launch {
+                LaunchedEffect(bottomSheetScaffoldState.bottomSheetState) {
                     bottomSheetScaffoldState.bottomSheetState.collapse()
                 }
             else ->
-                coroutineScope.launch {
+                LaunchedEffect(bottomSheetScaffoldState.bottomSheetState) {
                     bottomSheetScaffoldState.bottomSheetState.expand()
                 }
         }
