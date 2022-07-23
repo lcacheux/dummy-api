@@ -1,16 +1,17 @@
 package net.cacheux.dummyapi.datasource.cached
 
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.times
-import com.nhaarman.mockitokotlin2.verify
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import net.cacheux.dummyapi.common.DatasourceRepository
 import net.cacheux.dummyapi.datasource.memory.DatasourceRepositoryMemoryImpl
 import net.cacheux.dummyapi.datasource.test.DatasourceRepositoryTestImpl
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
+import org.mockito.kotlin.any
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.times
+import org.mockito.kotlin.verify
 
 class DatasourceRepositoryCachedImplTest {
     @Test

@@ -9,5 +9,5 @@ java {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}")
+    implementation(Deps.coroutinesCore)
 }

@@ -6,12 +6,12 @@ plugins {
 }
 
 android {
-    compileSdk = 31
+    compileSdk = Versions.compileSdk
 
     defaultConfig {
         applicationId = "net.cacheux.dummyapi"
-        minSdk = 21
-        targetSdk = 31
+        minSdk = Versions.minSdk
+        targetSdk = Versions.compileSdk
         versionCode = 1
         versionName = "1.0"
 
@@ -65,31 +65,31 @@ dependencies {
     implementation(project(":datasource-room"))
     implementation(project(":datasource-server"))
 
-    implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.appcompat:appcompat:1.4.0")
-    implementation("com.google.android.material:material:1.4.0")
+    implementation(Deps.androidxCore)
+    implementation(Deps.appcompat)
+    implementation(Deps.material)
     implementation("androidx.compose.ui:ui:${Versions.compose}")
     implementation("androidx.compose.material:material:${Versions.compose}")
     implementation("androidx.compose.runtime:runtime-livedata:${Versions.compose}")
     implementation("androidx.compose.ui:ui-tooling-preview:${Versions.compose}")
-    implementation("androidx.paging:paging-compose:1.0.0-alpha14")
+    implementation("androidx.paging:paging-compose:1.0.0-alpha15")
 
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}")
 
-    implementation("androidx.activity:activity-compose:1.4.0")
+    implementation("androidx.activity:activity-compose:1.5.0")
     implementation("io.coil-kt:coil-compose:1.4.0")
 
-    implementation("io.insert-koin:koin-core:${Versions.koin}")
-    implementation("io.insert-koin:koin-android:${Versions.koin}")
+    implementation(Deps.koinCore)
+    implementation(Deps.koinAndroid)
 
     testImplementation(project(":datasource-test"))
     testImplementation(project(":datasource-memory"))
-    testImplementation("junit:junit:4.13.2")
-    testImplementation("androidx.test:core:1.4.0")
-    testImplementation("androidx.arch.core:core-testing:2.1.0")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutines}")
+    testImplementation(Deps.junit)
+    testImplementation(Deps.androidxTestCore)
+    testImplementation(Deps.androidxCoreTesting)
+    testImplementation(Deps.coroutinesTest)
     testImplementation("org.robolectric:robolectric:${Versions.robolectric}")
     testImplementation("io.insert-koin:koin-test-junit4:${Versions.koin}")
 

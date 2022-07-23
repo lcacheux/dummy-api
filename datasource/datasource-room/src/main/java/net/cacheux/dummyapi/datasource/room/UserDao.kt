@@ -13,7 +13,7 @@ interface UserDao {
     fun getUserList(page: Int = 0, limit: Int = 10): Flow<List<RoomUser>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addUsers(users: List<RoomUser>)
+    fun addUsers(users: List<RoomUser>)
 
     @Query("SELECT COUNT(*) FROM user")
     fun getUserCount(): Int

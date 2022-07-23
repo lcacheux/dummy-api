@@ -1,6 +1,6 @@
 package net.cacheux.dummyapi.datasource.server.json
 
-import kotlinx.serialization.*
+import kotlinx.serialization.Serializable
 
 @Serializable
 data class JsonResult<T>(

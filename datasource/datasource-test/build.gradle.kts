@@ -10,8 +10,8 @@ java {
 
 dependencies {
     implementation(project(":common"))
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}")
-    implementation("io.insert-koin:koin-core:${Versions.koin}")
+    implementation(Deps.coroutinesCore)
+    implementation(Deps.koinCore)
 
-    testImplementation("junit:junit:4.13.2")
+    testImplementation(Deps.junit)
 }

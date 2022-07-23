@@ -10,13 +10,13 @@ java {
 
 dependencies {
     implementation(project(":common"))
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}")
-    implementation("io.insert-koin:koin-core:${Versions.koin}")
+    implementation(Deps.coroutinesCore)
+    implementation(Deps.koinCore)
 
     testImplementation(project(":datasource-test"))
     testImplementation(project(":datasource-memory"))
-    testImplementation("junit:junit:4.13.2")
-    testImplementation("androidx.arch.core:core-testing:2.1.0")
-    testImplementation("org.mockito:mockito-core:3.10.0")
-    testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
+    testImplementation(Deps.junit)
+    testImplementation(Deps.androidxCoreTesting)
+    testImplementation(Deps.mockitoCore)
+    testImplementation(Deps.mockitoKotlin)
 }

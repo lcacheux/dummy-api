@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    compileSdk = 31
+    compileSdk = Versions.compileSdk
 
     defaultConfig {
-        minSdk = 21
-        targetSdk = 31
+        minSdk = Versions.minSdk
+        targetSdk = Versions.compileSdk
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -50,22 +50,21 @@ android {
 dependencies {
     implementation(project(":common"))
 
-    implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.appcompat:appcompat:1.4.0")
+    implementation(Deps.androidxCore)
+    implementation(Deps.appcompat)
 
     implementation("androidx.room:room-runtime:${Versions.room}")
     annotationProcessor("androidx.room:room-compiler:${Versions.room}")
 
     kapt("androidx.room:room-compiler:${Versions.room}")
-
     implementation("androidx.room:room-ktx:${Versions.room}")
 
-    implementation("io.insert-koin:koin-core:${Versions.koin}")
-    implementation("io.insert-koin:koin-android:${Versions.koin}")
+    implementation(Deps.koinCore)
+    implementation(Deps.koinAndroid)
 
     testImplementation(project(":datasource-test"))
-    testImplementation("junit:junit:4.13.2")
-    testImplementation("androidx.arch.core:core-testing:2.1.0")
+    testImplementation(Deps.junit)
+    testImplementation(Deps.androidxCoreTesting)
     testImplementation("androidx.room:room-testing:${Versions.room}")
     testImplementation("org.robolectric:robolectric:${Versions.robolectric}")
 

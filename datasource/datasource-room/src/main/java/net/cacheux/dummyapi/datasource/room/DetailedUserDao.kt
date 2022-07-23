@@ -13,5 +13,5 @@ interface DetailedUserDao {
     fun getDetailedUser(id: String): Flow<RoomDetailedUser?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addDetailedUser(user: RoomDetailedUser)
+    fun addDetailedUser(user: RoomDetailedUser)
 }

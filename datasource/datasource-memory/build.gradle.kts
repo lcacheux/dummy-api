@@ -10,11 +10,11 @@ java {
 
 dependencies {
     implementation(project(":common"))
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}")
-    implementation("io.insert-koin:koin-core:${Versions.koin}")
-    implementation("androidx.annotation:annotation:1.3.0")
+    implementation(Deps.coroutinesCore)
+    implementation(Deps.koinCore)
+    implementation(Deps.androidxAnnotation)
 
     testImplementation(project(":datasource-test"))
-    testImplementation("junit:junit:4.13.2")
-    testImplementation("androidx.arch.core:core-testing:2.1.0")
+    testImplementation(Deps.junit)
+    testImplementation(Deps.androidxCoreTesting)
 }
