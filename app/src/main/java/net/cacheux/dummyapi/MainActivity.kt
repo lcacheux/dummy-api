@@ -15,12 +15,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import dagger.hilt.android.AndroidEntryPoint
 import net.cacheux.dummyapi.MainViewModel.ViewState
 import net.cacheux.dummyapi.ui.DetailedUserView
 import net.cacheux.dummyapi.ui.LiveUserList
 import net.cacheux.dummyapi.ui.theme.DummyAPITheme
 
 @ExperimentalMaterialApi
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val viewModel: MainViewModel by viewModels()
 
@@ -41,7 +43,6 @@ class MainActivity : ComponentActivity() {
 @ExperimentalMaterialApi
 @Composable
 fun DummyApiApp(viewModel: MainViewModel) {
-    val coroutineScope = rememberCoroutineScope()
     val viewState = viewModel.getViewState().observeAsState()
     val isCacheAvailable = viewModel.isCacheAvailable().observeAsState()
     var showMenu by remember { mutableStateOf(false) }

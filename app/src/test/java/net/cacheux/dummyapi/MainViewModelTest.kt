@@ -4,19 +4,14 @@ import android.app.Application
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
-import net.cacheux.dummyapi.common.DatasourceRepository
 import net.cacheux.dummyapi.common.model.User
 import net.cacheux.dummyapi.datasource.cached.DatasourceRepositoryCachedImpl
 import net.cacheux.dummyapi.datasource.memory.DatasourceRepositoryMemoryImpl
 import net.cacheux.dummyapi.datasource.test.DatasourceRepositoryTestImpl
-import net.cacheux.dummyapi.datasource.test.datasourceTestModule
 import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.koin.core.context.loadKoinModules
-import org.koin.dsl.module
-import org.koin.test.KoinTestRule
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
@@ -30,14 +25,9 @@ class MainViewModelTest {
     @get:Rule
     var instantTaskExecutor = InstantTaskExecutorRule()
 
-    @get:Rule
-    val koinTestRule = KoinTestRule.create {
-        modules(datasourceTestModule)
-    }
-
     @Test
     fun testSelectedUser() {
-        val viewModel = MainViewModel(testCoroutineDispatcher)
+        val viewModel = MainViewModel(testCoroutineDispatcher, DatasourceRepositoryTestImpl())
 
         assertNull(viewModel.getSelectedUser().value)
         assertTrue(viewModel.getViewState().value is MainViewModel.ViewState.ShowUserList)
@@ -53,7 +43,7 @@ class MainViewModelTest {
 
     @Test
     fun testCacheDisabled() {
-        val viewModel = MainViewModel(testCoroutineDispatcher)
+        val viewModel = MainViewModel(testCoroutineDispatcher, DatasourceRepositoryTestImpl())
 
         assertFalse(viewModel.isCacheAvailable().value == true)
 
@@ -63,16 +53,10 @@ class MainViewModelTest {
 
     @Test
     fun testCacheEnabled() {
-        loadKoinModules(module {
-            single<DatasourceRepository> {
-                DatasourceRepositoryCachedImpl(
-                    DatasourceRepositoryTestImpl(),
-                    DatasourceRepositoryMemoryImpl()
-                )
-            }
-        })
-
-        val viewModel = MainViewModel(testCoroutineDispatcher)
+        val viewModel = MainViewModel(testCoroutineDispatcher, DatasourceRepositoryCachedImpl(
+            DatasourceRepositoryTestImpl(),
+            DatasourceRepositoryMemoryImpl()
+        ))
 
         assertTrue(viewModel.isCacheAvailable().value == true)
 

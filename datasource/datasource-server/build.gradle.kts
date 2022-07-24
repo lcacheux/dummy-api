@@ -17,8 +17,6 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
 
-    implementation(Deps.koinCore)
-
     testImplementation(Deps.junit)
     testImplementation(Deps.coroutinesTest)
     testImplementation("com.squareup.okhttp3:mockwebserver:4.9.1")

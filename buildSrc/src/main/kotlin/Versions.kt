@@ -6,10 +6,10 @@ object Versions {
     const val coroutines = "1.6.3"
     const val compose = "1.1.1"
     const val retrofit = "2.9.0"
-    const val koin = "3.2.0"
     const val lifecycle = "2.5.0"
     const val room = "2.4.2"
     const val robolectric = "4.8.1"
+    const val hilt = "2.40.5"
 }
 
 object Deps {
@@ -19,8 +19,11 @@ object Deps {
     const val androidxAnnotation = "androidx.annotation:annotation:1.4.0"
     const val material = "com.google.android.material:material:1.6.1"
 
-    const val koinCore = "io.insert-koin:koin-core:${Versions.koin}"
-    const val koinAndroid = "io.insert-koin:koin-android:${Versions.koin}"
+    // Hilt
+    const val hiltCore = "com.google.dagger:hilt-core:${Versions.hilt}"
+    const val hiltCompiler = "com.google.dagger:hilt-compiler:${Versions.hilt}"
+    const val hiltAndroid = "com.google.dagger:hilt-android:${Versions.hilt}"
+    const val hiltAndroidCompiler = "com.google.dagger:hilt-android-compiler:${Versions.hilt}"
 
     // Tests
     const val junit = "junit:junit:4.13.2"

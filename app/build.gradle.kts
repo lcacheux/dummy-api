@@ -3,6 +3,8 @@ import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 plugins {
     id("com.android.application")
     kotlin("android")
+    kotlin("kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -81,8 +83,8 @@ dependencies {
     implementation("androidx.activity:activity-compose:1.5.0")
     implementation("io.coil-kt:coil-compose:1.4.0")
 
-    implementation(Deps.koinCore)
-    implementation(Deps.koinAndroid)
+    implementation(Deps.hiltAndroid)
+    kapt(Deps.hiltAndroidCompiler)
 
     testImplementation(project(":datasource-test"))
     testImplementation(project(":datasource-memory"))
@@ -91,11 +93,14 @@ dependencies {
     testImplementation(Deps.androidxCoreTesting)
     testImplementation(Deps.coroutinesTest)
     testImplementation("org.robolectric:robolectric:${Versions.robolectric}")
-    testImplementation("io.insert-koin:koin-test-junit4:${Versions.koin}")
 
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:${Versions.compose}")
 
     debugImplementation("androidx.compose.ui:ui-tooling:${Versions.compose}")
+}
+
+kapt {
+    correctErrorTypes = true
 }

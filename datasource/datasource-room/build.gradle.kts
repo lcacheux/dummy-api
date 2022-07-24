@@ -59,9 +59,6 @@ dependencies {
     kapt("androidx.room:room-compiler:${Versions.room}")
     implementation("androidx.room:room-ktx:${Versions.room}")
 
-    implementation(Deps.koinCore)
-    implementation(Deps.koinAndroid)
-
     testImplementation(project(":datasource-test"))
     testImplementation(Deps.junit)
     testImplementation(Deps.androidxCoreTesting)

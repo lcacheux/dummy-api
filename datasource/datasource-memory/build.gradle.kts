@@ -11,7 +11,6 @@ java {
 dependencies {
     implementation(project(":common"))
     implementation(Deps.coroutinesCore)
-    implementation(Deps.koinCore)
     implementation(Deps.androidxAnnotation)
 
     testImplementation(project(":datasource-test"))

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -13,11 +14,14 @@ import net.cacheux.dummyapi.common.CachedDatasourceRepository
 import net.cacheux.dummyapi.common.DatasourceRepository
 import net.cacheux.dummyapi.common.model.DetailedUser
 import net.cacheux.dummyapi.common.model.User
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
+import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
-class MainViewModel(private val coroutineContext: CoroutineContext = Dispatchers.IO) : ViewModel(), KoinComponent {
+@HiltViewModel
+class MainViewModel @Inject constructor(
+    private val coroutineContext: CoroutineContext = Dispatchers.IO,
+    private val datasource: DatasourceRepository
+) : ViewModel() {
     companion object {
         const val PAGE_SIZE = 20
     }
@@ -28,8 +32,6 @@ class MainViewModel(private val coroutineContext: CoroutineContext = Dispatchers
         data class UserLoadedSuccess(val user: DetailedUser): ViewState()
         data class UserLoadedError(val error: Int): ViewState()
     }
-
-    private val datasource: DatasourceRepository by inject()
 
     private val viewState = MutableLiveData<ViewState>(ViewState.ShowUserList)
     fun getViewState(): LiveData<ViewState> = viewState
