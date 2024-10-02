@@ -1,25 +1,25 @@
 plugins {
     id("java-library")
     kotlin("jvm")
-    kotlin("plugin.serialization") version Versions.kotlin
+    kotlin("plugin.serialization")
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 dependencies {
     implementation(project(":common"))
 
-    implementation(Deps.coroutinesCore)
-    implementation("com.squareup.retrofit2:retrofit:${Versions.retrofit}")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
-    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter)
 
-    testImplementation(Deps.junit)
-    testImplementation(Deps.coroutinesTest)
-    testImplementation("com.squareup.okhttp3:mockwebserver:4.9.1")
-    testImplementation(Deps.mockitoCore)
-    testImplementation(Deps.mockitoKotlin)
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.mockwebserver)
+    testImplementation(libs.mockito)
+    testImplementation(libs.mockito.kotlin)
 }

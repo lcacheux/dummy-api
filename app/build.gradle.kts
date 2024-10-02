@@ -1,19 +1,23 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import org.jetbrains.compose.ExperimentalComposeLibrary
 
 plugins {
-    id("com.android.application")
+    alias(libs.plugins.android.application)
     kotlin("android")
     kotlin("kapt")
-    id("dagger.hilt.android.plugin")
+    alias(libs.plugins.hilt.android)
+    alias(libs.plugins.jetbrains.compose)
 }
 
 android {
-    compileSdk = Versions.compileSdk
+    namespace = "net.cacheux.dummyapi"
+
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
         applicationId = "net.cacheux.dummyapi"
-        minSdk = Versions.minSdk
-        targetSdk = Versions.compileSdk
+        minSdk = libs.versions.android.minSdk.get().toInt()
+        targetSdk = libs.versions.android.compileSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
 
@@ -34,21 +38,24 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
-    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions {
-            jvmTarget = JavaVersion.VERSION_1_8.toString()
-        }
+
+    kotlinOptions {
+        jvmTarget = libs.versions.java.get()
     }
+
     buildFeatures {
         compose = true
+        buildConfig = true
     }
+
     composeOptions {
-        kotlinCompilerExtensionVersion  = Versions.compose
+        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
     }
-    packagingOptions {
+
+    packaging {
         resources {
             excludes.add("/META-INF/{AL2.0,LGPL2.1}")
         }
@@ -59,6 +66,7 @@ android {
             isIncludeAndroidResources = true
         }
     }
+    namespace = "net.cacheux.dummyapi"
 }
 
 dependencies {
@@ -67,38 +75,38 @@ dependencies {
     implementation(project(":datasource-room"))
     implementation(project(":datasource-server"))
 
-    implementation(Deps.androidxCore)
-    implementation(Deps.appcompat)
-    implementation(Deps.material)
-    implementation("androidx.compose.ui:ui:${Versions.compose}")
-    implementation("androidx.compose.material:material:${Versions.compose}")
-    implementation("androidx.compose.runtime:runtime-livedata:${Versions.compose}")
-    implementation("androidx.compose.ui:ui-tooling-preview:${Versions.compose}")
-    implementation("androidx.paging:paging-compose:1.0.0-alpha15")
+    implementation(libs.androidx.core.ktx)
 
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}")
+    implementation(libs.material)
 
-    implementation("androidx.activity:activity-compose:1.5.0")
-    implementation("io.coil-kt:coil-compose:1.4.0")
+    implementation(compose.ui)
+    implementation(compose.material3)
+    implementation(compose.runtime)
+    implementation(compose.uiTooling)
 
-    implementation(Deps.hiltAndroid)
-    kapt(Deps.hiltAndroidCompiler)
+    implementation(libs.androidx.paging.compose)
+
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.coil.compose)
+
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
 
     testImplementation(project(":datasource-test"))
     testImplementation(project(":datasource-memory"))
-    testImplementation(Deps.junit)
-    testImplementation(Deps.androidxTestCore)
-    testImplementation(Deps.androidxCoreTesting)
-    testImplementation(Deps.coroutinesTest)
-    testImplementation("org.robolectric:robolectric:${Versions.robolectric}")
+    testImplementation(libs.junit)
+    testImplementation(libs.androidx.test.core)
+    testImplementation(libs.androidx.arch.core.testing)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.robolectric)
 
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:${Versions.compose}")
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.espresso.core)
 
-    debugImplementation("androidx.compose.ui:ui-tooling:${Versions.compose}")
+    @OptIn(ExperimentalComposeLibrary::class)
+    androidTestImplementation(compose.uiTest)
+
+    debugImplementation(compose.uiTooling)
 }
 
 kapt {

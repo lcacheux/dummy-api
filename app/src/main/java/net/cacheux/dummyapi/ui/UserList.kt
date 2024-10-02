@@ -1,11 +1,19 @@
 package net.cacheux.dummyapi.ui
 
-import androidx.compose.foundation.layout.*
+import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -14,7 +22,6 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.items
 import net.cacheux.dummyapi.MainViewModel
 import net.cacheux.dummyapi.R
 import net.cacheux.dummyapi.common.model.User
@@ -24,6 +31,7 @@ fun LiveUserList(viewModel: MainViewModel) {
     UserList(viewModel)
 }
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun UserList(viewModel: MainViewModel) {
     Scaffold(
@@ -32,7 +40,8 @@ fun UserList(viewModel: MainViewModel) {
             LazyColumn(
                 contentPadding = PaddingValues(horizontal = 8.dp, vertical = 8.dp)
             ) {
-                items(lazyUserList) { user ->
+                items(count = lazyUserList.itemCount) { index ->
+                    val user = lazyUserList[index]
                     user?.let { UserListItem(viewModel, user) }
                 }
 

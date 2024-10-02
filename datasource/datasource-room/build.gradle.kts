@@ -5,11 +5,12 @@ plugins {
 }
 
 android {
-    compileSdk = Versions.compileSdk
+    namespace = "net.cacheux.dummyapi.datasource.room"
+
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = Versions.minSdk
-        targetSdk = Versions.compileSdk
+        minSdk = libs.versions.android.minSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -31,14 +32,14 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
-    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions {
-            jvmTarget = JavaVersion.VERSION_1_8.toString()
-        }
+
+    kotlinOptions {
+        jvmTarget = libs.versions.java.get()
     }
+
     testOptions {
         unitTests {
             isReturnDefaultValues = true
@@ -50,20 +51,19 @@ android {
 dependencies {
     implementation(project(":common"))
 
-    implementation(Deps.androidxCore)
-    implementation(Deps.appcompat)
+    implementation(libs.androidx.core.ktx)
 
-    implementation("androidx.room:room-runtime:${Versions.room}")
-    annotationProcessor("androidx.room:room-compiler:${Versions.room}")
+    implementation(libs.androidx.room.runtime)
+    annotationProcessor(libs.androidx.room.compiler)
 
-    kapt("androidx.room:room-compiler:${Versions.room}")
-    implementation("androidx.room:room-ktx:${Versions.room}")
+    kapt(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
 
     testImplementation(project(":datasource-test"))
-    testImplementation(Deps.junit)
-    testImplementation(Deps.androidxCoreTesting)
-    testImplementation("androidx.room:room-testing:${Versions.room}")
-    testImplementation("org.robolectric:robolectric:${Versions.robolectric}")
+    testImplementation(libs.junit)
+    testImplementation(libs.androidx.arch.core.testing)
+    testImplementation(libs.androidx.room.testing)
+    testImplementation(libs.robolectric)
 
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
+    androidTestImplementation(libs.androidx.test.ext.junit)
 }

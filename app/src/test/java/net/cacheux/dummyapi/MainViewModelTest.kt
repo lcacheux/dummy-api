@@ -3,12 +3,16 @@ package net.cacheux.dummyapi
 import android.app.Application
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import net.cacheux.dummyapi.common.model.User
 import net.cacheux.dummyapi.datasource.cached.DatasourceRepositoryCachedImpl
 import net.cacheux.dummyapi.datasource.memory.DatasourceRepositoryMemoryImpl
 import net.cacheux.dummyapi.datasource.test.DatasourceRepositoryTestImpl
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -20,7 +24,7 @@ import org.robolectric.annotation.Config
 @Config(application = Application::class)
 class MainViewModelTest {
 
-    private val testCoroutineDispatcher = TestCoroutineDispatcher()
+    private val testCoroutineDispatcher = UnconfinedTestDispatcher()
 
     @get:Rule
     var instantTaskExecutor = InstantTaskExecutorRule()
@@ -45,10 +49,10 @@ class MainViewModelTest {
     fun testCacheDisabled() {
         val viewModel = MainViewModel(testCoroutineDispatcher, DatasourceRepositoryTestImpl())
 
-        assertFalse(viewModel.isCacheAvailable().value == true)
+        assertFalse(viewModel.isCacheAvailable())
 
         viewModel.clearCache()
-        assertNull(viewModel.getMessage().value)
+        assertEquals(0, viewModel.getMessage().value)
     }
 
     @Test
@@ -58,7 +62,7 @@ class MainViewModelTest {
             DatasourceRepositoryMemoryImpl()
         ))
 
-        assertTrue(viewModel.isCacheAvailable().value == true)
+        assertTrue(viewModel.isCacheAvailable())
 
         viewModel.clearCache()
         assertEquals(R.string.cache_cleared, viewModel.getMessage().value)

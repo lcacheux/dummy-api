@@ -1,6 +1,5 @@
 package net.cacheux.dummyapi.datasource.server
 
-import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -15,6 +14,7 @@ import net.cacheux.dummyapi.datasource.server.json.JsonUser
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
+import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import java.io.IOException
 import kotlin.coroutines.CoroutineContext
 

@@ -4,18 +4,17 @@ plugins {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 dependencies {
     implementation(project(":common"))
-    implementation(Deps.coroutinesCore)
+    implementation(libs.kotlinx.coroutines.core)
 
     testImplementation(project(":datasource-test"))
     testImplementation(project(":datasource-memory"))
-    testImplementation(Deps.junit)
-    testImplementation(Deps.androidxCoreTesting)
-    testImplementation(Deps.mockitoCore)
-    testImplementation(Deps.mockitoKotlin)
+    testImplementation(libs.junit)
+    testImplementation(libs.mockito)
+    testImplementation(libs.mockito.kotlin)
 }

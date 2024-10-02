@@ -1,13 +1,17 @@
 package net.cacheux.dummyapi
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.*
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.PagingSource
+import androidx.paging.PagingState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import net.cacheux.dummyapi.common.CachedDatasourceRepository
@@ -27,22 +31,22 @@ class MainViewModel @Inject constructor(
     }
 
     sealed class ViewState {
-        object ShowUserList: ViewState()
+        data object ShowUserList: ViewState()
         data class LoadUser(val user: User): ViewState()
         data class UserLoadedSuccess(val user: DetailedUser): ViewState()
         data class UserLoadedError(val error: Int): ViewState()
     }
 
-    private val viewState = MutableLiveData<ViewState>(ViewState.ShowUserList)
-    fun getViewState(): LiveData<ViewState> = viewState
+    private val viewState = MutableStateFlow<ViewState>(ViewState.ShowUserList)
+    fun getViewState(): StateFlow<ViewState> = viewState
 
-    private val selectedUser = MutableLiveData<User?>()
-    fun getSelectedUser(): LiveData<User?> = selectedUser
+    private val selectedUser = MutableStateFlow<User?>(null)
+    fun getSelectedUser(): StateFlow<User?> = selectedUser
 
-    private val message = MutableLiveData<Int>()
-    fun getMessage(): LiveData<Int> = message
+    private val message = MutableStateFlow(0)
+    fun getMessage(): StateFlow<Int> = message
 
-    fun isCacheAvailable() = object : LiveData<Boolean>(datasource is CachedDatasourceRepository) {}
+    fun isCacheAvailable() = datasource is CachedDatasourceRepository
 
     val users: Flow<PagingData<User>> = Pager(PagingConfig(initialLoadSize = PAGE_SIZE, pageSize = PAGE_SIZE)) {
         userSource
@@ -58,9 +62,9 @@ class MainViewModel @Inject constructor(
         viewState.value = ViewState.LoadUser(user)
         viewModelScope.launch(context = coroutineContext) {
             datasource.getDetailedUser(user.id).first()?.let { user ->
-                viewState.postValue(ViewState.UserLoadedSuccess(user))
+                viewState.value = ViewState.UserLoadedSuccess(user)
             } ?: run {
-                viewState.postValue(ViewState.UserLoadedError(R.string.error_loading_detailed_user))
+                viewState.value = ViewState.UserLoadedError(R.string.error_loading_detailed_user)
             }
         }
     }
@@ -70,8 +74,8 @@ class MainViewModel @Inject constructor(
     fun clearCache() {
         if (datasource is CachedDatasourceRepository) {
             viewModelScope.launch(context = coroutineContext) {
-                (datasource as CachedDatasourceRepository).clearCache()
-                message.postValue(R.string.cache_cleared)
+                datasource.clearCache()
+                message.value = R.string.cache_cleared
             }
         }
     }
