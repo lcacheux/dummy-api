@@ -3,8 +3,8 @@ import org.jetbrains.compose.ExperimentalComposeLibrary
 
 plugins {
     alias(libs.plugins.android.application)
-    kotlin("android")
-    kotlin("kapt")
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.ksp)
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.jetbrains.compose)
 }
@@ -90,7 +90,7 @@ dependencies {
     implementation(libs.coil.compose)
 
     implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
 
     testImplementation(project(":datasource-test"))
     testImplementation(project(":datasource-memory"))
@@ -107,8 +107,4 @@ dependencies {
     androidTestImplementation(compose.uiTest)
 
     debugImplementation(compose.uiTooling)
-}
-
-kapt {
-    correctErrorTypes = true
 }

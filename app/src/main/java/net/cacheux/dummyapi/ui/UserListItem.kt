@@ -16,8 +16,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberAsyncImagePainter
 import coil.compose.rememberImagePainter
+import coil.request.ImageRequest
 import net.cacheux.dummyapi.MainViewModel
 import net.cacheux.dummyapi.common.model.User
 import net.cacheux.dummyapi.ui.theme.Purple200
@@ -43,11 +46,11 @@ fun UserListItem(viewModel: MainViewModel, user: User) {
             }
         ) {
             Image(
-                painter = rememberImagePainter(
-                    data = user.pictureUrl,
-                    builder = {
-                        crossfade(true)
-                    }
+                painter = rememberAsyncImagePainter(
+                    ImageRequest.Builder(LocalContext.current)
+                        .data(user.pictureUrl)
+                        .apply { crossfade(true) }
+                        .build()
                 ),
                 contentDescription = "",
                 modifier = Modifier
